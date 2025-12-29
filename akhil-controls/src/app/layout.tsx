@@ -7,8 +7,8 @@ import { ThemeProvider } from "@/context/ThemeContext";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "ElectroControl Pro",
-  description: "Advanced Electrical Control Panel Solutions",
+  title: "Akhil Controls",
+  description: "Advanced Electrical Control Pane",
 };
 
 export default function RootLayout({
