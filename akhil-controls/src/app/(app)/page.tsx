@@ -2,7 +2,6 @@
 "use client";
 
 import { useState } from "react";
-import Navbar from "@/components/layout/Navbar";
 import Sidebar from "@/components/layout/Sidebar";
 import HeroCarousel from "@/components/sections/HeroCarousel";
 import FeaturesSection from "@/components/sections/FeaturesSection";
@@ -16,17 +15,15 @@ export default function Home() {
 
   return (
     <>
-      <Navbar onMenuToggle={toggleSidebar} />
-
       <div className="flex">
-        <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+        {/* <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} /> */}
 
-        <main className="flex-1 lg:ml-72 flex flex-col min-h-screen">
+        <main className="flex-1 flex flex-col min-h-screen">
           <HeroCarousel />
           <FeaturesSection />
           <StatsSection />
           <div className="flex-1" /> {/* Spacer */}
-          <Footer />
+          {/* <Footer /> */}
         </main>
       </div>
     </>

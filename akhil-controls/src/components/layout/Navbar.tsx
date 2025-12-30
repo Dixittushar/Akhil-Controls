@@ -1,6 +1,7 @@
 // src/components/layout/Navbar.tsx
 "use client";
 
+import Link from "next/link"; // Add this import
 import { Zap, Menu, X } from "lucide-react";
 import { useTheme } from "@/context/ThemeContext";
 import { useState } from "react";
@@ -11,8 +12,16 @@ export default function Navbar({ onMenuToggle }: { onMenuToggle: () => void }) {
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
-    onMenuToggle(); // We'll use this later for sidebar sync
+    onMenuToggle();
   };
+
+  const navLinks = [
+    { name: "Home", href: "/" },
+    { name: "Products", href: "/products" },
+    { name: "Services", href: "/services" },
+    { name: "About", href: "/about" },
+    { name: "Contact", href: "/contact" },
+  ];
 
   return (
     <>
@@ -21,58 +30,37 @@ export default function Navbar({ onMenuToggle }: { onMenuToggle: () => void }) {
       >
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           {/* Logo */}
-          <div className="flex items-center space-x-3">
+          <Link href="/" className="flex items-center space-x-3">
             <div
               className={`w-10 h-10 ${theme.accent} rounded flex items-center justify-center font-bold ${theme.textOnAccent}`}
             >
               <Zap className="w-6 h-6" />
             </div>
             <span className="text-xl font-bold">Akhil Controls</span>
-          </div>
+          </Link>
 
           {/* Desktop Menu */}
           <div className="hidden lg:flex items-center space-x-8">
-            <a
-              href="#"
-              className={`font-medium hover:${theme.accentText} transition`}
-            >
-              Home
-            </a>
-            <a
-              href="#"
-              className={`font-medium hover:${theme.accentText} transition`}
-            >
-              Products
-            </a>
-            <a
-              href="#"
-              className={`font-medium hover:${theme.accentText} transition`}
-            >
-              Services
-            </a>
-            <a
-              href="#"
-              className={`font-medium hover:${theme.accentText} transition`}
-            >
-              About
-            </a>
-            <a
-              href="#"
-              className={`font-medium hover:${theme.accentText} transition`}
-            >
-              Contact
-            </a>
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                href={link.href}
+                className={`font-medium hover:${theme.accentText} transition`}
+              >
+                {link.name}
+              </Link>
+            ))}
           </div>
 
-          {/* Desktop CTA + Mobile Menu Button */}
+          {/* Desktop CTA + Mobile Toggle */}
           <div className="flex items-center gap-4">
-            <button
+            <Link
+              href="/contact"
               className={`hidden lg:block ${theme.accent} ${theme.textOnAccent} px-6 py-2.5 rounded-lg font-semibold ${theme.accentHover} transition transform hover:scale-105 shadow-md`}
             >
               Get Quote
-            </button>
+            </Link>
 
-            {/* Mobile Hamburger */}
             <button
               onClick={toggleMobileMenu}
               className="lg:hidden p-2 rounded-lg hover:bg-white/20 transition"
@@ -87,47 +75,29 @@ export default function Navbar({ onMenuToggle }: { onMenuToggle: () => void }) {
         </div>
       </nav>
 
-      {/* Mobile Menu Overlay (appears below navbar) */}
+      {/* Mobile Menu */}
       {mobileMenuOpen && (
         <div
           className={`lg:hidden fixed inset-x-0 top-16 z-40 bg-gradient-to-b ${theme.primary} shadow-xl`}
         >
           <div className="px-6 py-6 space-y-4">
-            <a
-              href="#"
-              className="block text-lg font-medium hover:opacity-80 transition"
-            >
-              Home
-            </a>
-            <a
-              href="#"
-              className="block text-lg font-medium hover:opacity-80 transition"
-            >
-              Products
-            </a>
-            <a
-              href="#"
-              className="block text-lg font-medium hover:opacity-80 transition"
-            >
-              Services
-            </a>
-            <a
-              href="#"
-              className="block text-lg font-medium hover:opacity-80 transition"
-            >
-              About
-            </a>
-            <a
-              href="#"
-              className="block text-lg font-medium hover:opacity-80 transition"
-            >
-              Contact
-            </a>
-            <button
-              className={`${theme.accent} ${theme.textOnAccent} w-full py-3 rounded-lg font-semibold ${theme.accentHover} transition mt-4`}
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                href={link.href}
+                onClick={() => setMobileMenuOpen(false)} // Close menu on click
+                className="block text-lg font-medium hover:opacity-80 transition"
+              >
+                {link.name}
+              </Link>
+            ))}
+            <Link
+              href="/contact"
+              onClick={() => setMobileMenuOpen(false)}
+              className={`${theme.accent} ${theme.textOnAccent} w-full py-3 rounded-lg font-semibold ${theme.accentHover} transition block text-center mt-4`}
             >
               Get Quote
-            </button>
+            </Link>
           </div>
         </div>
       )}
