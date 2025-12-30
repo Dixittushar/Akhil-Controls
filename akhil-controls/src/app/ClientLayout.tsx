@@ -23,7 +23,7 @@ export default function ClientLayout({
     <html lang="en">
       <body className={inter.className}>
         <ThemeProvider>
-          <Navbar onMenuToggle={toggleSidebar} />
+          <Navbar />
           <div className="flex min-h-screen">
             <Sidebar
               isOpen={sidebarOpen}

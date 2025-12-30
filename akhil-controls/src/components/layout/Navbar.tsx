@@ -1,19 +1,17 @@
 // src/components/layout/Navbar.tsx
 "use client";
 
-import Link from "next/link"; // Add this import
+import Link from "next/link";
 import { Zap, Menu, X } from "lucide-react";
 import { useTheme } from "@/context/ThemeContext";
 import { useState } from "react";
 
-export default function Navbar({ onMenuToggle }: { onMenuToggle: () => void }) {
+export default function Navbar() {
+  // Remove onMenuToggle prop
   const { theme } = useTheme();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen(!mobileMenuOpen);
-    onMenuToggle();
-  };
+  const toggleMobileMenu = () => setMobileMenuOpen(!mobileMenuOpen);
 
   const navLinks = [
     { name: "Home", href: "/" },
@@ -52,11 +50,11 @@ export default function Navbar({ onMenuToggle }: { onMenuToggle: () => void }) {
             ))}
           </div>
 
-          {/* Desktop CTA + Mobile Toggle */}
+          {/* Desktop CTA + Mobile Hamburger */}
           <div className="flex items-center gap-4">
             <Link
               href="/contact"
-              className={`hidden lg:block ${theme.accent} ${theme.textOnAccent} px-6 py-2.5 rounded-lg font-semibold ${theme.accentHover} transition transform hover:scale-105 shadow-md`}
+              className={`hidden lg:block ${theme.accent} ${theme.textOnAccent} px-6 py-2.5 rounded-lg font-semibold ${theme.accentHover} transition shadow-md`}
             >
               Get Quote
             </Link>
@@ -75,26 +73,26 @@ export default function Navbar({ onMenuToggle }: { onMenuToggle: () => void }) {
         </div>
       </nav>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu - Main Pages Only */}
       {mobileMenuOpen && (
         <div
           className={`lg:hidden fixed inset-x-0 top-16 z-40 bg-gradient-to-b ${theme.primary} shadow-xl`}
         >
-          <div className="px-6 py-6 space-y-4">
+          <div className="px-6 py-8 space-y-6">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 href={link.href}
-                onClick={() => setMobileMenuOpen(false)} // Close menu on click
-                className="block text-lg font-medium hover:opacity-80 transition"
+                onClick={toggleMobileMenu}
+                className="block text-xl font-medium hover:opacity-80 transition py-2"
               >
                 {link.name}
               </Link>
             ))}
             <Link
               href="/contact"
-              onClick={() => setMobileMenuOpen(false)}
-              className={`${theme.accent} ${theme.textOnAccent} w-full py-3 rounded-lg font-semibold ${theme.accentHover} transition block text-center mt-4`}
+              onClick={toggleMobileMenu}
+              className={`${theme.accent} ${theme.textOnAccent} w-full py-4 rounded-lg font-bold text-lg ${theme.accentHover} transition block text-center mt-8`}
             >
               Get Quote
             </Link>
