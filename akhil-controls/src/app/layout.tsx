@@ -1,14 +1,10 @@
 // src/app/layout.tsx
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-import { ThemeProvider } from "@/context/ThemeContext";
-
-const inter = Inter({ subsets: ["latin"] });
+import ClientLayout from "./ClientLayout";
 
 export const metadata: Metadata = {
   title: "Akhil Controls",
-  description: "Advanced Electrical Control Pane",
+  description: "Advanced Electrical Control Panel Solutions",
 };
 
 export default function RootLayout({
@@ -16,11 +12,5 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <html lang="en">
-      <body className={inter.className}>
-        <ThemeProvider>{children}</ThemeProvider>
-      </body>
-    </html>
-  );
+  return <ClientLayout>{children}</ClientLayout>;
 }
