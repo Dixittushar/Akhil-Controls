@@ -3,6 +3,7 @@
 
 import { Zap, Shield, Settings } from "lucide-react";
 import { useTheme } from "@/context/ThemeContext";
+import FadeInSection from "@/components/ui/FadeInSection";
 
 export default function FeaturesSection() {
   const { theme } = useTheme();
@@ -31,28 +32,33 @@ export default function FeaturesSection() {
   return (
     <section className="py-16 lg:py-24 bg-gray-50">
       <div className="max-w-7xl mx-auto px-6">
-        <h2 className="text-4xl lg:text-5xl font-bold text-center text-gray-800 mb-12">
-          Why Choose Us?
-        </h2>
+        <FadeInSection>
+          <h2 className="text-4xl lg:text-5xl font-bold text-center text-gray-800 mb-12">
+            Why Choose Us?
+          </h2>
+        </FadeInSection>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {features.map((feature, index) => (
-            <div
-              key={index}
-              className={`${theme.cardBg} border-2 ${theme.border} rounded-2xl p-8 hover:shadow-2xl transition transform hover:-translate-y-2`}
-            >
+            <FadeInSection key={index} delay={index * 0.2}>
+              {" "}
+              {/* Staggered delay */}
               <div
-                className={`w-20 h-20 ${theme.iconBg} rounded-xl flex items-center justify-center mb-6 mx-auto`}
+                className={`${theme.cardBg} border-2 ${theme.border} rounded-2xl p-8 hover:shadow-2xl transition transform hover:-translate-y-2`}
               >
-                <feature.icon className={`w-10 h-10 ${theme.icon}`} />
+                <div
+                  className={`w-20 h-20 ${theme.iconBg} rounded-xl flex items-center justify-center mb-6 mx-auto`}
+                >
+                  <feature.icon className={`w-10 h-10 ${theme.icon}`} />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-800 mb-4 text-center">
+                  {feature.title}
+                </h3>
+                <p className="text-gray-600 text-center leading-relaxed">
+                  {feature.description}
+                </p>
               </div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-4 text-center">
-                {feature.title}
-              </h3>
-              <p className="text-gray-600 text-center leading-relaxed">
-                {feature.description}
-              </p>
-            </div>
+            </FadeInSection>
           ))}
         </div>
       </div>
