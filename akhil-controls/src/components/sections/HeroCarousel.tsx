@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
 import { useTheme } from "@/context/ThemeContext";
 import { carouselSlides } from "@/lib/carouselSlides";
+import { motion } from "framer-motion";
 
 export default function HeroCarousel() {
   const { theme } = useTheme();
@@ -13,8 +14,8 @@ export default function HeroCarousel() {
   const backgroundImages = [
     "https://images.unsplash.com/photo-1581093450021-4a7360e9a6b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
     "https://images.unsplash.com/photo-1581093588401-fbb62a02f120?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
-    "https://images.unsplash.com/photo-1581093588401-fbb62a02f120?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
-    "https://images.unsplash.com/photo-1581093588401-fbb62a02f120?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
+    "https://images.unsplash.com/photo-1581092160562-36aa8da0d04f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
+    "https://images.unsplash.com/photo-1558494949-ef910663bb8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
   ];
 
   useEffect(() => {
@@ -42,41 +43,82 @@ export default function HeroCarousel() {
         >
           {/* Background Image */}
           <div
-            className="absolute inset-0"
+            className="absolute inset-0 transition-opacity duration-1000"
             style={{
               backgroundImage: `url(${backgroundImages[index]})`,
               backgroundSize: "cover",
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",
+              opacity: index === currentSlide ? 1 : 0,
             }}
           />
 
           {/* Dark Overlay */}
           <div className="absolute inset-0 bg-black/60" />
 
-          {/* Content */}
+          {/* Animated Content */}
           <div className="relative h-full flex items-center justify-center text-white px-6">
-            <div className="text-center max-w-5xl">
-              <h1 className="text-4xl lg:text-7xl font-bold mb-6 leading-tight drop-shadow-2xl">
+            <motion.div
+              className="text-center max-w-5xl"
+              initial={{ opacity: 0, y: 50 }}
+              animate={
+                index === currentSlide
+                  ? { opacity: 1, y: 0 }
+                  : { opacity: 0, y: 50 }
+              }
+              transition={{ duration: 0.8, ease: "easeOut" }}
+            >
+              <motion.h1
+                className="text-4xl lg:text-7xl font-bold mb-6 leading-tight drop-shadow-2xl"
+                initial={{ opacity: 0, y: 30 }}
+                animate={
+                  index === currentSlide ? { opacity: 1, y: 0 } : { opacity: 0 }
+                }
+                transition={{ duration: 0.8, delay: 0.2 }}
+              >
                 {slide.title}
-              </h1>
-              <p className="text-xl lg:text-3xl mb-6 text-gray-100 drop-shadow-lg">
+              </motion.h1>
+
+              <motion.p
+                className="text-xl lg:text-3xl mb-6 text-gray-100 drop-shadow-lg"
+                initial={{ opacity: 0, y: 30 }}
+                animate={
+                  index === currentSlide ? { opacity: 1, y: 0 } : { opacity: 0 }
+                }
+                transition={{ duration: 0.8, delay: 0.4 }}
+              >
                 {slide.subtitle}
-              </p>
-              <p className="text-lg lg:text-xl mb-10 max-w-3xl mx-auto text-gray-200 drop-shadow-md">
+              </motion.p>
+
+              <motion.p
+                className="text-lg lg:text-xl mb-10 max-w-3xl mx-auto text-gray-200 drop-shadow-md"
+                initial={{ opacity: 0, y: 30 }}
+                animate={
+                  index === currentSlide ? { opacity: 1, y: 0 } : { opacity: 0 }
+                }
+                transition={{ duration: 0.8, delay: 0.6 }}
+              >
                 {slide.description}
-              </p>
-              <button
+              </motion.p>
+
+              <motion.button
                 className={`${theme.accent} ${theme.textOnAccent} px-10 py-5 rounded-xl text-lg lg:text-xl font-bold ${theme.accentHover} transition transform hover:scale-110 shadow-2xl flex items-center mx-auto`}
+                initial={{ opacity: 0, y: 30 }}
+                animate={
+                  index === currentSlide ? { opacity: 1, y: 0 } : { opacity: 0 }
+                }
+                transition={{ duration: 0.8, delay: 0.8 }}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
               >
                 Learn More <ArrowRight className="ml-4 w-7 h-7" />
-              </button>
-            </div>
+              </motion.button>
+            </motion.div>
           </div>
         </div>
       ))}
 
-      {/* Navigation Arrows - Always visible */}
+      {/* Navigation Arrows */}
       <button
         onClick={prevSlide}
         className="absolute left-6 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 backdrop-blur-sm p-4 rounded-full transition z-20"
@@ -90,7 +132,7 @@ export default function HeroCarousel() {
         <ChevronRight className="w-8 h-8 text-white" />
       </button>
 
-      {/* Dots Indicator - Always visible */}
+      {/* Dots Indicator */}
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex space-x-4 z-20">
         {carouselSlides.map((_, index) => (
           <button

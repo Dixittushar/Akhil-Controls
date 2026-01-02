@@ -1,25 +1,64 @@
 // src/app/about/page.tsx
+"use client";
+
+import { motion, Variants } from "framer-motion";
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.3,
+    },
+  },
+};
+
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 60 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.8,
+      ease: "easeOut",
+    },
+  },
+};
 
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       <div className="max-w-7xl mx-auto px-6 py-16 lg:py-24">
-        <div className="text-center mb-16">
+        {/* Hero Header Animation */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16"
+        >
           <h1 className="text-5xl lg:text-6xl font-bold text-gray-800 mb-6">
-            About ElectroControl Pro
+            About Akhil Controls
           </h1>
           <p className="text-xl text-gray-600 max-w-4xl mx-auto">
             Your trusted partner in industrial automation and electrical control
             systems since 2000.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-16 items-center mb-24">
-          <div>
+        {/* Our Story Section */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          className="grid lg:grid-cols-2 gap-16 items-center mb-24"
+        >
+          <motion.div variants={itemVariants}>
             <h2 className="text-4xl font-bold text-gray-800 mb-6">Our Story</h2>
             <p className="text-lg text-gray-600 leading-relaxed mb-6">
-              Founded in 2000, ElectroControl Pro has grown from a small panel
-              shop to a leading provider of advanced control systems across
+              Founded in 2000, Akhil Controls has grown from a small panel shop
+              to a leading provider of advanced control systems across
               industries including manufacturing, oil & gas, water treatment,
               and food processing.
             </p>
@@ -28,32 +67,57 @@ export default function AboutPage() {
               combine engineering excellence with practical field knowledge to
               deliver solutions that are reliable, safe, and future-ready.
             </p>
-          </div>
-          <div className="bg-gray-200 border-2 border-dashed rounded-xl w-full h-96" />
-        </div>
+          </motion.div>
 
+          <motion.div
+            variants={itemVariants}
+            className="bg-gray-200 border-2 border-dashed rounded-xl w-full h-96"
+          />
+        </motion.div>
+
+        {/* Our Values Section */}
         <div className="text-center">
-          <h2 className="text-4xl font-bold text-gray-800 mb-12">Our Values</h2>
-          <div className="grid md:grid-cols-3 gap-10">
-            <div className="bg-white p-8 rounded-2xl shadow-lg">
-              <h3 className="text-2xl font-bold mb-4">Safety First</h3>
-              <p className="text-gray-600">
-                Every design prioritizes personnel and equipment protection.
-              </p>
-            </div>
-            <div className="bg-white p-8 rounded-2xl shadow-lg">
-              <h3 className="text-2xl font-bold mb-4">Quality Always</h3>
-              <p className="text-gray-600">
-                UL 508A certified with rigorous testing at every stage.
-              </p>
-            </div>
-            <div className="bg-white p-8 rounded-2xl shadow-lg">
-              <h3 className="text-2xl font-bold mb-4">Customer Success</h3>
-              <p className="text-gray-600">
-                Your operational efficiency is our ultimate measure of success.
-              </p>
-            </div>
-          </div>
+          <motion.h2
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8 }}
+            className="text-4xl font-bold text-gray-800 mb-12"
+          >
+            Our Values
+          </motion.h2>
+
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            className="grid md:grid-cols-3 gap-10"
+          >
+            {[
+              {
+                title: "Safety First",
+                desc: "Every design prioritizes personnel and equipment protection.",
+              },
+              {
+                title: "Quality Always",
+                desc: "UL 508A certified with rigorous testing at every stage.",
+              },
+              {
+                title: "Customer Success",
+                desc: "Your operational efficiency is our ultimate measure of success.",
+              },
+            ].map((value, index) => (
+              <motion.div
+                key={index}
+                variants={itemVariants}
+                className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition transform hover:-translate-y-2"
+              >
+                <h3 className="text-2xl font-bold mb-4">{value.title}</h3>
+                <p className="text-gray-600">{value.desc}</p>
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
       </div>
     </div>
